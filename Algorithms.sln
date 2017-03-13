@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmConsoleApp", "Algorithms\AlgorithmConsoleApp.csproj", "{4DAC6304-5E32-4B53-B33A-292B92E0A99B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreedyAlgorithm", "GreedyAlgorithm\GreedyAlgorithm.csproj", "{FE62A7D4-C6B5-461F-8FC2-835D0CCE51FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4DAC6304-5E32-4B53-B33A-292B92E0A99B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DAC6304-5E32-4B53-B33A-292B92E0A99B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DAC6304-5E32-4B53-B33A-292B92E0A99B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DAC6304-5E32-4B53-B33A-292B92E0A99B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE62A7D4-C6B5-461F-8FC2-835D0CCE51FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE62A7D4-C6B5-461F-8FC2-835D0CCE51FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE62A7D4-C6B5-461F-8FC2-835D0CCE51FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE62A7D4-C6B5-461F-8FC2-835D0CCE51FD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
