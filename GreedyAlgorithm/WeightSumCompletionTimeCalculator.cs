@@ -10,6 +10,26 @@ namespace GreedyAlgorithm
 {
     public class WeightSumCompletionTimeCalculator
     {
+        class AlgorithmOneComparer : IComparer<Tuple<int, int, int>>
+        {
+            public int Compare(Tuple<int, int, int> x, Tuple<int, int, int> y)
+            {
+                if (x.Item1 < y.Item1)
+                    return -1;
+                else if (x.Item1 > y.Item1)
+                    return 1;
+                else
+                {
+                    if (x.Item2 > y.Item2)
+                        return -1;
+                    else if (x.Item2 < y.Item2)
+                        return 1;
+                    else
+                        return 0;
+                }
+            }
+        }
+
         string dataFilePath;
         Data data = new Data();
 
@@ -27,6 +47,24 @@ namespace GreedyAlgorithm
 
         public void RunAlgorithmOne()
         {
+            IList<Tuple<int, int>> weightLengthList = data.GetWeightLengthList();
+
+            SortedSet<Tuple<int, int, int>> sortedCompTime = new SortedSet<Tuple<int, int, int>>(new AlgorithmOneComparer());
+
+            foreach (Tuple<int, int> pair in weightLengthList)
+            {
+                int score = pair.Item1 - pair.Item2;
+                
+                sortedCompTime.Add(new Tuple<int, int, int>(score, pair.Item1, pair.Item2));
+            }
+
+            int sum = 0;
+
+            foreach (Tuple<int, int, int> pair in sortedCompTime)
+            {
+                sum += pair.Item1;  // TODO: how does the score work;
+            }
+
 
         }
 
@@ -77,7 +115,7 @@ namespace GreedyAlgorithm
             weightLengthCollection.Add(item);
         }
 
-        public IList<Tuple<int, int>> GetWeightLengthCollection()
+        public IList<Tuple<int, int>> GetWeightLengthList()
         {
             return weightLengthCollection;
         }
