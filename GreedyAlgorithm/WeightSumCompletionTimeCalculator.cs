@@ -10,19 +10,26 @@ namespace GreedyAlgorithm
 {
     public class WeightSumCompletionTimeCalculator
     {
-        class AlgorithmOneComparer : IComparer<Tuple<int, int, int>>
+        class Job
         {
-            public int Compare(Tuple<int, int, int> x, Tuple<int, int, int> y)
+            public int Score { get; set; }
+            public int Weight { get; set; }
+            public int Length { get; set; }
+        }
+
+        class AlgorithmOneComparer : IComparer<Job>
+        {
+            public int Compare(Job x, Job y)
             {
-                if (x.Item1 < y.Item1)
+                if (x.Score < y.Score)
                     return -1;
-                else if (x.Item1 > y.Item1)
+                else if (x.Score > y.Score)
                     return 1;
                 else
                 {
-                    if (x.Item2 > y.Item2)
+                    if (x.Weight > y.Weight)
                         return -1;
-                    else if (x.Item2 < y.Item2)
+                    else if (x.Weight < y.Weight)
                         return 1;
                     else
                         return 0;
@@ -45,32 +52,54 @@ namespace GreedyAlgorithm
             dp.Parse(data);
         }
 
-        public void RunAlgorithmOne()
+        public int RunAlgorithmOne()
         {
             IList<Tuple<int, int>> weightLengthList = data.GetWeightLengthList();
 
-            SortedSet<Tuple<int, int, int>> sortedCompTime = new SortedSet<Tuple<int, int, int>>(new AlgorithmOneComparer());
+            SortedSet<Job> sortedCompTime = new SortedSet<Job>(new AlgorithmOneComparer());
 
             foreach (Tuple<int, int> pair in weightLengthList)
             {
                 int score = pair.Item1 - pair.Item2;
-                
-                sortedCompTime.Add(new Tuple<int, int, int>(score, pair.Item1, pair.Item2));
+
+                sortedCompTime.Add(new Job() { Score = score, Weight = pair.Item1, Length = pair.Item2 });
             }
 
             int sum = 0;
+            int length = 0;
 
-            foreach (Tuple<int, int, int> pair in sortedCompTime)
+            foreach (Job item in sortedCompTime)
             {
-                sum += pair.Item1;  // TODO: how does the score work;
+                length += item.Length;
+                sum += item.Weight * length;
             }
 
-
+            return sum;
         }
 
-        public void RunAlgorithmTwo()
+        public int RunAlgorithmTwo()
         {
+            IList<Tuple<int, int>> weightLengthList = data.GetWeightLengthList();
 
+            SortedSet<Job> sortedCompTime = new SortedSet<Job>(new AlgorithmOneComparer());
+
+            foreach (Tuple<int, int> pair in weightLengthList)
+            {
+                int score = pair.Item1 / pair.Item2;
+
+                sortedCompTime.Add(new Job() { Score = score, Weight = pair.Item1, Length = pair.Item2 });
+            }
+
+            int sum = 0;
+            int length = 0;
+
+            foreach (Job item in sortedCompTime)
+            {
+                length += item.Length;
+                sum += item.Weight * length;
+            }
+
+            return sum;
         }
 
 

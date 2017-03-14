@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GreedyAlgorithm;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,17 @@ namespace Algorithms
     {
         static void Main(string[] args)
         {
+            string dataFilePath = @"..\..\..\jobs.txt";
+            WeightSumCompletionTimeCalculator calculator = 
+                new WeightSumCompletionTimeCalculator(dataFilePath);
+
+            int resultOne = calculator.RunAlgorithmOne();
+            int resultTwo = calculator.RunAlgorithmTwo();
+
+            Console.WriteLine(resultOne);
+            Console.WriteLine(resultTwo);
+
+            Console.ReadKey();
         }
     }
 }
