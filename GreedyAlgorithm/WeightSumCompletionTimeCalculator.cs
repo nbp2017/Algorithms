@@ -38,7 +38,7 @@ namespace GreedyAlgorithm
         }
 
         string dataFilePath;
-        Data data = new Data();
+        WeightSumCompletionTimeData data = new WeightSumCompletionTimeData();
 
         public WeightSumCompletionTimeCalculator(string dataFilePath)
         {
@@ -48,7 +48,7 @@ namespace GreedyAlgorithm
 
         private void ParseData()
         {
-            DataParser dp = new DataParser(dataFilePath);
+            WeightSumCompletionTimeDataParser dp = new WeightSumCompletionTimeDataParser(dataFilePath);
             dp.Parse(data);
         }
 
@@ -105,16 +105,16 @@ namespace GreedyAlgorithm
 
     }
 
-    public class DataParser
+    public class WeightSumCompletionTimeDataParser
     {
         string filepath;
 
-        public DataParser(string filepath)
+        public WeightSumCompletionTimeDataParser(string filepath)
         {
             this.filepath = filepath;
         }
 
-        public void Parse(Data data)
+        public void Parse(WeightSumCompletionTimeData data)
         {
             string[] parsedLines = File.ReadAllLines(filepath);
 
@@ -135,7 +135,7 @@ namespace GreedyAlgorithm
         }
     }
 
-    public class Data
+    public class WeightSumCompletionTimeData
     {
         List<Tuple<int, int>> weightLengthCollection = new List<Tuple<int, int>>();
 
