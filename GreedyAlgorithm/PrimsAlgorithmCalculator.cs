@@ -14,8 +14,21 @@ namespace GreedyAlgorithm
             Dictionary<int, Dictionary<int, int>> nodeNodeWeightGraph =
                 new Dictionary<int, Dictionary<int, int>>();
 
+            HashSet<int> nodes = new HashSet<int>();
+
+            public HashSet<int> Nodes
+            {
+                get { return nodes; }
+            }
+
             public void Add(int i, int j, int weight)
             {
+                if (nodes.Contains(i))
+                    nodes.Add(i);
+
+                if (nodes.Contains(j))
+                    nodes.Add(j);
+
                 if (!nodeNodeWeightGraph.ContainsKey(i))
                     nodeNodeWeightGraph.Add(i, new Dictionary<int, int>());
 
@@ -24,12 +37,19 @@ namespace GreedyAlgorithm
 
                 nodeNodeWeightGraph[i].Add(j, weight);
                 nodeNodeWeightGraph[j].Add(i, weight);
-
             }
 
             public Dictionary<int, int> GetConnection(int node)
             {
                 return nodeNodeWeightGraph[node];
+            }
+            
+            public int GetWeight(int i, int j)
+            {
+                if (nodeNodeWeightGraph[i].ContainsKey(j))
+                    return nodeNodeWeightGraph[i][j];
+                else
+                    return int.MaxValue;
             }
         }
 
@@ -113,17 +133,40 @@ namespace GreedyAlgorithm
 
         public int RunAlgorithm()
         {
+            bool firstNode = true;
+
             // initialize the min spanning tree and frontier
-
             // Pick first node to put into the min spanning tree
-
             // add the other nodes into the frontier
+
+            MinSpanningTree mst;
+            Frontier frontier = new Frontier();
+            int initialNode = -1;
+
+            foreach (int node in graph.Nodes)
+            {
+                if (firstNode)
+                {
+                    initialNode = node;
+                    mst = new MinSpanningTree(node);
+                    firstNode = false;
+                }
+                else
+                {
+                    int weight = graph.GetWeight(node, initialNode);
+                    frontier.Add(weight, node);
+                }
+            }
+
+
 
             // pick the node with the lowest weight and add it to the mst
 
             // remove node from frontier and adjust connecting nodes
 
             // repeat last two steps 
+
+
             return 0;
         }
     }
