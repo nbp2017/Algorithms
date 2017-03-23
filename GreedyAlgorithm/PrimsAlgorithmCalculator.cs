@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -66,6 +67,7 @@ namespace GreedyAlgorithm
             public void Add(Tuple<int, int, int> edge)
             {
                 edges.Add(edge);
+                // add to nodes
             }
 
             public bool ContainsNode(int node)
@@ -76,14 +78,17 @@ namespace GreedyAlgorithm
 
         class Frontier
         {
-            SortedDictionary<int, HashSet<int>> minCutTree = new SortedDictionary<int, HashSet<int>>();
+            SortedDictionary<int, Dictionary<int, int?>> minCutTree = new SortedDictionary<int, Dictionary<int, int?>>();
+            Dictionary<int, int> nodeWeightDict = new Dictionary<int, int>();
 
-            public void Add(int weight, int node)
+            public void Add(int weight, int node, int? mstNode)
             {
                 if (!minCutTree.ContainsKey(weight))
-                    minCutTree.Add(weight, new HashSet<int>());
+                    minCutTree.Add(weight, new Dictionary<int, int?>());
 
-                minCutTree[weight].Add(node);
+                minCutTree[weight].Add(node, mstNode);
+
+                nodeWeightDict.Add(node, weight);
             }
 
             public void Remove(int weight, int node)
@@ -95,13 +100,37 @@ namespace GreedyAlgorithm
                     else
                         minCutTree[weight].Remove(node);
                 }
+
+                nodeWeightDict.Remove(node);
             }
 
-            public Tuple<int, int> GetMinimumCut()
+            public void AdjustWeight(int node, int mstNode, int weight)
             {
-                KeyValuePair<int, HashSet<int>> minWeightNodes = minCutTree.First();
+                int oldWeight = nodeWeightDict[node];
 
-                return new Tuple<int, int>(minWeightNodes.Key, minWeightNodes.Value.First());
+                if (oldWeight < weight)
+                    return;
+
+                if (minCutTree[oldWeight].Count <= 1)
+                    minCutTree.Remove(oldWeight);
+                else
+                     minCutTree[oldWeight].Remove(node);
+
+                if (!minCutTree.ContainsKey(weight))
+                    minCutTree.Add(weight, new Dictionary<int, int?>());
+
+                minCutTree[weight].Add(node, mstNode);
+            }
+
+            public Tuple<int, int, int> GetMinimumCut()
+            {
+                KeyValuePair<int, Dictionary<int, int?>> minWeightNodes = minCutTree.First();
+                KeyValuePair<int, int?> edge = minWeightNodes.Value.First();
+
+                if (edge.Value == null)
+                    Debug.Assert(false);
+
+                return new Tuple<int, int, int>(minWeightNodes.Key, edge.Key, (int)edge.Value);
             }
         }
         
@@ -139,7 +168,7 @@ namespace GreedyAlgorithm
             // Pick first node to put into the min spanning tree
             // add the other nodes into the frontier
 
-            MinSpanningTree mst;
+            MinSpanningTree mst = null;
             Frontier frontier = new Frontier();
             int initialNode = -1;
 
@@ -154,15 +183,18 @@ namespace GreedyAlgorithm
                 else
                 {
                     int weight = graph.GetWeight(node, initialNode);
-                    frontier.Add(weight, node);
+                    frontier.Add(weight, node, initialNode);
                 }
             }
 
-
-
             // pick the node with the lowest weight and add it to the mst
+            // remove node from frontier
+            Tuple<int, int, int> nextEdge = frontier.GetMinimumCut();
+            frontier.Remove(nextEdge.Item1, nextEdge.Item2);
+            mst.Add(nextEdge);
 
-            // remove node from frontier and adjust connecting nodes
+            // adjust connecting nodes
+            
 
             // repeat last two steps 
 
