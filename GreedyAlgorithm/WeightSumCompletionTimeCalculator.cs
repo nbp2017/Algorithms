@@ -22,15 +22,15 @@ namespace GreedyAlgorithm
             public int Compare(Job x, Job y)
             {
                 if (x.Score < y.Score)
-                    return -1;
-                else if (x.Score > y.Score)
                     return 1;
+                else if (x.Score > y.Score)
+                    return -1;
                 else
                 {
                     if (x.Weight > y.Weight)
-                        return -1;
-                    else if (x.Weight < y.Weight)
                         return 1;
+                    else if (x.Weight < y.Weight)
+                        return -1;
                     else
                         return 0;
                 }
@@ -75,6 +75,8 @@ namespace GreedyAlgorithm
             }
 
             return sum;
+
+
         }
 
         public int RunAlgorithmTwo()

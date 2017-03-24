@@ -11,8 +11,17 @@ namespace Algorithms
     {
         static void Main(string[] args)
         {
+            Test1();
+
+            //Test2();
+
+            Console.ReadKey();
+        }
+
+        public static void Test1()
+        {
             string dataFilePath = @"..\..\..\jobs.txt";
-            WeightSumCompletionTimeCalculator calculator = 
+            WeightSumCompletionTimeCalculator calculator =
                 new WeightSumCompletionTimeCalculator(dataFilePath);
 
             int resultOne = calculator.RunAlgorithmOne();
@@ -20,8 +29,17 @@ namespace Algorithms
 
             Console.WriteLine(resultOne);
             Console.WriteLine(resultTwo);
+        }
 
-            Console.ReadKey();
+        public static void Test2()
+        {
+            string dataFilePath = @"..\..\..\edges.txt";
+            PrimsAlgorithmCalculator pac = new PrimsAlgorithmCalculator(dataFilePath);
+
+            int result = pac.RunAlgorithm();
+
+            Console.WriteLine(result);
+
         }
     }
 }
