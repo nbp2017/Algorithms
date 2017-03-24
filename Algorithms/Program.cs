@@ -20,7 +20,7 @@ namespace Algorithms
 
         public static void Test1()
         {
-            string dataFilePath = @"..\..\..\jobs.txt";
+            string dataFilePath = @"..\..\..\jobs_test.txt";
             WeightSumCompletionTimeCalculator calculator =
                 new WeightSumCompletionTimeCalculator(dataFilePath);
 

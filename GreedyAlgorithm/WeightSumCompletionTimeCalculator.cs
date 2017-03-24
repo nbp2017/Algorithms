@@ -12,7 +12,7 @@ namespace GreedyAlgorithm
     {
         class Job
         {
-            public int Score { get; set; }
+            public double Score { get; set; }
             public int Weight { get; set; }
             public int Length { get; set; }
         }
@@ -28,9 +28,9 @@ namespace GreedyAlgorithm
                 else
                 {
                     if (x.Weight > y.Weight)
-                        return 1;
-                    else if (x.Weight < y.Weight)
                         return -1;
+                    else if (x.Weight < y.Weight)
+                        return 1;
                     else
                         return 0;
                 }
@@ -87,7 +87,7 @@ namespace GreedyAlgorithm
 
             foreach (Tuple<int, int> pair in weightLengthList)
             {
-                int score = pair.Item1 / pair.Item2;
+                double score = (double)pair.Item1 / (double)pair.Item2;
 
                 sortedCompTime.Add(new Job() { Score = score, Weight = pair.Item1, Length = pair.Item2 });
             }
