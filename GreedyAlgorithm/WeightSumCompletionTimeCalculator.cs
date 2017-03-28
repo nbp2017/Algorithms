@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -52,26 +53,43 @@ namespace GreedyAlgorithm
             dp.Parse(data);
         }
 
-        public int RunAlgorithmOne()
+        public double RunAlgorithmOne()
         {
             IList<Tuple<int, int>> weightLengthList = data.GetWeightLengthList();
 
             SortedSet<Job> sortedCompTime = new SortedSet<Job>(new AlgorithmOneComparer());
 
             foreach (Tuple<int, int> pair in weightLengthList)
-            {
-                int score = pair.Item1 - pair.Item2;
+            { 
+                double score = (double)pair.Item1 - (double)pair.Item2;
 
                 sortedCompTime.Add(new Job() { Score = score, Weight = pair.Item1, Length = pair.Item2 });
             }
 
-            int sum = 0;
-            int length = 0;
+            double sum = 0.0;
+            double length = 0;
+
+            Job jobPrev = new Job() { Score = double.MaxValue };
+            int count = 0;
 
             foreach (Job item in sortedCompTime)
             {
+                count++;
+
                 length += item.Length;
-                sum += item.Weight * length;
+                sum += (double)item.Weight * length;
+
+                if (length > .8 * int.MaxValue)
+                    Debug.Assert(false);
+
+                if (sum > .8 * double.MaxValue)
+                    Debug.Assert(false);
+
+                //if (jobPrev.Score <= item.Score)
+                //    Debug.Assert(false);
+
+                jobPrev = item;
+
             }
 
             return sum;
@@ -79,7 +97,7 @@ namespace GreedyAlgorithm
 
         }
 
-        public int RunAlgorithmTwo()
+        public double RunAlgorithmTwo()
         {
             IList<Tuple<int, int>> weightLengthList = data.GetWeightLengthList();
 
@@ -92,13 +110,13 @@ namespace GreedyAlgorithm
                 sortedCompTime.Add(new Job() { Score = score, Weight = pair.Item1, Length = pair.Item2 });
             }
 
-            int sum = 0;
+            double sum = 0;
             int length = 0;
 
             foreach (Job item in sortedCompTime)
             {
                 length += item.Length;
-                sum += item.Weight * length;
+                sum += (double)item.Weight * (double)length;
             }
 
             return sum;
